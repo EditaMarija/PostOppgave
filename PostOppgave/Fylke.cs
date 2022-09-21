@@ -55,7 +55,7 @@ namespace PostOppgave
             new Fylke(16, "Nord-Trøndelag", 7750, 7950),
             new Fylke(17, "Nordland", 7950, 8450),
             new Fylke(17, "Nordland", 8500, 9000),
-            new Fylke(18, "Troms", 9000, 91450),
+            new Fylke(18, "Troms", 9000, 9150),
             new Fylke(18, "Troms", 9200, 9500),
             new Fylke(19, "Finnmark", 9150, 9200),
             new Fylke(19, "Finnmark", 9500, 9999),
