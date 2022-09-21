@@ -64,7 +64,6 @@ namespace PostOppgave
     }
 }
 
-
 /*
 00–12 Oslo
 13–15 Akershus
