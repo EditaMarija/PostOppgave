@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
     public class Garage
     {
         public string? Bedriftsnavn { get; set; }
@@ -27,6 +22,8 @@ using Newtonsoft.Json;
             Console.WriteLine(Organisasjonsnummer);
             Console.WriteLine(Godkjenningsnummer + " \n ");
         }
+
+
     //public void PrintVerksted()
     //{
     //    Console.WriteLine( 

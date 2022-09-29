@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +12,17 @@ namespace PostOppgave
 {
     public class GarageCollection
     {
-        static List<Type> TypeList = new List<Type>();
-        static GarageCollection()
-        {
+        static List<Type> TypeList = new();
+        public List<Garage> GarageList = new List<Garage>();
+        public CountyCollection _countyCollection;
 
-            //string verkstedJsonData = File.ReadAllText("verksted.json");
-            //var verkstedfile = JsonConvert.DeserializeObject<List<Garage>>(verkstedJsonData,
-            //    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            
+        public GarageCollection()
+        {
+            _countyCollection = new CountyCollection();
+            string verkstedJsonData = File.ReadAllText("verksted.json");
+            GarageList = JsonConvert.DeserializeObject<List<Garage>>(verkstedJsonData,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
             TypeList.Add(new Type(1, "BILVERKSTED01"));
             TypeList.Add(new Type(2, "BILVERKSTED02"));
             TypeList.Add(new Type(3, "BILVERKSTED03"));
@@ -44,16 +48,36 @@ namespace PostOppgave
             TypeList.Add(new Type(23, "EKSOSANLEGG"));
             TypeList.Add(new Type(24, "LYSUTSTYR"));
 
-            //static void ShowResultCounty(List<Garage> verkstederlist, County fylkene)
-            //{
-            //    foreach (var workshop in verkstederlist)
-            //    {
-            //        if (workshop.Postnummer >= fylkene.FraPostnr && workshop.Postnummer <= fylkene.TilPostnr)
-            //        {
-            //            workshop.PrintGarage();
-            //        }
-            //    }
-            //}
         }
+
+        public void ShowResultCounty(County county)
+        {
+            foreach (var garage in GarageList)
+            {
+                if (garage.Postnummer >= county.FraPostnr && garage.Postnummer <= county.TilPostnr)
+                {
+                    garage.PrintGarage();
+                }
+            }
+        }
+        //static void ShowVerksted(int brukerValg)
+        //{
+        //    int brukerValg = int.Parse(Console.ReadLine());
+        //    var county = new CountyCollection();
+        //    county.FilterCounty(brukerValg);
+        //}
+
+        //public void ShowResultCounty(County counties, int brukerSvar )
+        //{
+        //    foreach (var garage in GarageList)
+        //    {
+        //        if (garage.Postnummer >= counties.FraPostnr && garage.Postnummer <= counties.TilPostnr)
+        //        {
+        //            garage.PrintGarage();
+        //        }
+        //    }
+        //}
+
+
     }
 }
