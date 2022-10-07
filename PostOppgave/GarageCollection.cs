@@ -12,9 +12,10 @@ namespace PostOppgave
 {
     public class GarageCollection
     {
-        static List<Type> TypeList = new();
-        public List<Garage> GarageList = new List<Garage>();
+        public List<Type>? TypeList = new List<Type>();
+        public List<Garage>? GarageList = new List<Garage>();
         public CountyCollection _countyCollection;
+        
 
         public GarageCollection()
         {
@@ -60,24 +61,30 @@ namespace PostOppgave
                 }
             }
         }
-        //static void ShowVerksted(int brukerValg)
-        //{
-        //    int brukerValg = int.Parse(Console.ReadLine());
-        //    var county = new CountyCollection();
-        //    county.FilterCounty(brukerValg);
-        //}
 
-        //public void ShowResultCounty(County counties, int brukerSvar )
-        //{
-        //    foreach (var garage in GarageList)
-        //    {
-        //        if (garage.Postnummer >= counties.FraPostnr && garage.Postnummer <= counties.TilPostnr)
-        //        {
-        //            garage.PrintGarage();
-        //        }
-        //    }
-        //}
+        
+        public int? ShowFilteredTypes(int brukerValg)
+        {
+            foreach (var type in TypeList)
+            {
+                if (type.TypeId == brukerValg)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Bilverksteder med {type.TypeNavn} godkjenning: \n ");
 
+                    foreach (var garage in GarageList)
+                    //foreach (var garage in selectedCounty)
+                    {
+                        //trenger if her?
+                        garage.PrintGarage();
+                    }
+                }
+            }
+
+            return null;
+        }
+
+       
 
     }
 }

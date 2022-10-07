@@ -48,29 +48,18 @@ namespace PostOppgave
 
         public County? FilterCounty(int brukerValg)
         {
-
             foreach (var fylke in CountyList)
             {
-
                 if (brukerValg == fylke.Idnr)
                 {
+                    Console.Clear();
+                    Console.WriteLine($"Bilverksteder i {fylke.Navn} fylke: \n ");
 
-                    //Console.Clear();
-                    //Console.WriteLine($"Bilverksteder i {fylke.Navn} fylke: \n ");
-
-                    //ShowResultCounty(fylke);
                     return fylke;
-
-                    //her kan vi hente ut postnr fra og til,eller array..split()
-                    //return fylke.FraPostnr + fylke.TilPostnr
                 }
-
             }
 
             return null;
         }
-
-        
-
     }
 }
