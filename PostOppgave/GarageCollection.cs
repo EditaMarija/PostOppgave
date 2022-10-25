@@ -16,7 +16,6 @@ namespace PostOppgave
         public List<Garage>? GarageList = new List<Garage>();
         public CountyCollection _countyCollection;
         
-
         public GarageCollection()
         {
             _countyCollection = new CountyCollection();
@@ -68,22 +67,24 @@ namespace PostOppgave
             foreach (var type in TypeList)
             {
                 if (type.TypeId == brukerValg)
-                {
-                    Console.Clear();
+                {                  
+                    Console.Clear();                   
                     Console.WriteLine($"Bilverksteder med {type.TypeNavn} godkjenning: \n ");
-
+                    // next:return list of garages with selected types
                     foreach (var garage in GarageList)
-                    //foreach (var garage in selectedCounty)
                     {
-                        //trenger if her?
-                        garage.PrintGarage();
+                        //if(garage.Godkjenningstyper.Contains((char)brukerValg))
+                        if (garage.Godkjenningstyper.Contains(type.TypeNavn))
+                        {
+                            garage.PrintGarage();
+                        }
+                       
                     }
                 }
             }
 
             return null;
         }
-
        
 
     }

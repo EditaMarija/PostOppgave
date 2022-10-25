@@ -7,26 +7,24 @@ using PostOppgave;
 namespace PostOppgave
 {
     class Program
-    {
-        //static List<Type> TypeList = new ();
-        
+    {   
         static void Main(string[] args)
         {
             //Welcome to the app
             var garageCollection = new GarageCollection();
             Console.WriteLine("Hei og velkommen!");
-
             MainMenu(garageCollection);
 
-            //Console.Read();
         }
 
+        //next: combine menu 1 and 2,to find garages with selected types in chosen county
         static void MainMenu(GarageCollection c)
         {
             Console.WriteLine("1: Søk på verksteder");
             Console.WriteLine("2: Søk på godkjenningstyper");
             ChosenMenu(c);
         }
+
         static void ChosenMenu(GarageCollection garages)
         {
             
@@ -44,6 +42,7 @@ namespace PostOppgave
    
                     ShowGarageTypes(garages.TypeList);
                     var brukerValg = int.Parse(Console.ReadLine());
+                    //find selected types and show garages
                     garages.ShowFilteredTypes(brukerValg);
                     //garages.ShowFilteredTypes(brukerValg, selectedCounty);
 
