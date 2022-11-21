@@ -1,18 +1,12 @@
-﻿using System.Text.RegularExpressions;
-using System.Text.Json;
-using Newtonsoft.Json;
-using PostOppgave;
-
-
+﻿
 namespace PostOppgave
 {
     class Program
     {   
         static void Main(string[] args)
         {
-            //Welcome to the app
             var garageCollection = new GarageCollection();
-            Console.WriteLine("Hei og velkommen!");
+            Console.WriteLine("Hei og velkommen! Velg 1 eller 2");
             MainMenu(garageCollection);
 
         }
@@ -39,19 +33,20 @@ namespace PostOppgave
                     break;
 
                 case "2":
-   
-                    ShowGarageTypes(garages.TypeList);
-                    var brukerValg = int.Parse(Console.ReadLine());
-                    //find selected types and show garages
-                    garages.ShowFilteredTypes(brukerValg);
-                    //garages.ShowFilteredTypes(brukerValg, selectedCounty);
 
+                    ShowGarageTypes(garages.TypeList);
+                    garages.GetResults();
+                    garages.FilterGarages();
+                    garages.PrintFilteredGarages();
+   
+                    //garages.ShowFilteredTypes(brukerValg);                    
                     break;
             }
         }
 
         static void ShowCounties(List<County> countyList)
         {
+            Console.Clear();
             Console.WriteLine("Velg ditt fylke:");
            
             foreach (var county in countyList)
@@ -63,6 +58,7 @@ namespace PostOppgave
 
         static void ShowGarageTypes(List<Type> typeList)
         {
+            Console.Clear();
             Console.WriteLine("Velg godkjenningstyper:");
             
             foreach (var type in typeList)
@@ -74,32 +70,5 @@ namespace PostOppgave
     }
 }
 
-            // Godkjenningstyper:
-            //int brukerSvar = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Velg godkjenningstyper:");
-            //var brukerValg = Console.ReadLine().ToUpper();
-                                  
-            //neste steg: å la bruker velge flere godkjenningstyper
-            //string[] brukerValgene = brukerValg.Split(' ');
-
-            //if (verksted != null)
-            //{
-            //    foreach (var verkstedet in verksted)
-            //    {  
-            //        if (verkstedet.Postnummer == brukerSvar
-            //            && verkstedet.Postnummer.GetType() != typeof(string) 
-            //            //&& verkstedet.Godkjenningstyper.Contains(brukerValg.ToString())
-            //            && verkstedet.Godkjenningstyper.Contains(brukerValg)
-            //            )
-            //        {
-            //            verkstedet.PrintVerksted();
-            //        }
-            //    }
-            //}          
-
-
-
-
-
-
+          
 

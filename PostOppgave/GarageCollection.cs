@@ -1,12 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace PostOppgave
 {
@@ -15,9 +9,10 @@ namespace PostOppgave
         public List<Type>? TypeList = new List<Type>();
         public List<Garage>? GarageList = new List<Garage>();
         public CountyCollection _countyCollection;
-        
+        public List<Garage>? ListOfFilteredGarages = new List<Garage>();
+
         public GarageCollection()
-        {
+        {          
             _countyCollection = new CountyCollection();
             string verkstedJsonData = File.ReadAllText("verksted.json");
             GarageList = JsonConvert.DeserializeObject<List<Garage>>(verkstedJsonData,
@@ -50,6 +45,7 @@ namespace PostOppgave
 
         }
 
+        //show garages in selected county
         public void ShowResultCounty(County county)
         {
             foreach (var garage in GarageList)
@@ -61,7 +57,91 @@ namespace PostOppgave
             }
         }
 
-        
+        //get selected types from client(input) and put them into new list(listMedValg)
+        public List<int> listeMedValg = new List<int>();
+        public List<string> valgteVerkstedOrd = new List<string>();
+
+        public void GetResults()
+        {
+            while (listeMedValg.Count < 3)
+            {
+                Console.WriteLine("Skriv inn Godkjenningstype(nummer):");
+                int input = int.Parse(Console.ReadLine());
+                if (!listeMedValg.Contains(input))
+                {
+                    listeMedValg.Add(input);
+                }
+                Console.WriteLine("Ønsker du å legge til ett tall til ? (n = nei) og (j = ja) ");
+                var input2 = Console.ReadLine();
+                if (input2.ToLower() == "n") break;
+            }
+        }
+
+        //filter list with selected types and add to list of filtered garages
+        public void FilterGarages()
+        {
+            foreach (var valg in listeMedValg)
+            {
+                TurnNumbersToNames(valg);
+            }
+
+            LoopThroughAllGarages();
+        }
+
+        public void TurnNumbersToNames(int number)
+        {
+            foreach (var type in TypeList)
+            {
+                if (number == type.TypeId) valgteVerkstedOrd.Add(type.TypeNavn);
+            }
+                    
+        }
+
+        public void LoopThroughAllGarages()
+        {
+            foreach (var garage in GarageList)
+            {
+                if (valgteVerkstedOrd.Count == 1 && garage.Godkjenningstyper.Contains(valgteVerkstedOrd[0]))
+                {
+                    AddGarageToFilteredList(garage);
+                }
+
+                if (valgteVerkstedOrd.Count == 2 && (garage.Godkjenningstyper.Contains(valgteVerkstedOrd[0]) &&
+                                                     garage.Godkjenningstyper.Contains(valgteVerkstedOrd[1])))
+                {
+                    AddGarageToFilteredList(garage);
+                }
+
+                if (valgteVerkstedOrd.Count == 3 && (garage.Godkjenningstyper.Contains(valgteVerkstedOrd[0]) &&
+                                                     garage.Godkjenningstyper.Contains(valgteVerkstedOrd[1]) &&
+                                                     garage.Godkjenningstyper.Contains(valgteVerkstedOrd[2])))
+                {
+                    AddGarageToFilteredList(garage);
+                }
+
+            }
+        }
+
+        public void AddGarageToFilteredList(Garage garage)
+        {
+            if (!ListOfFilteredGarages.Contains(garage))
+            {
+                ListOfFilteredGarages.Add(garage);
+            }
+        }
+
+        //shows garages with multiple types
+        public void PrintFilteredGarages()
+        {
+            Console.Clear();
+            Console.WriteLine($"Bilverksteder med din valgt godkjenning: \n ");
+            foreach (var garage in ListOfFilteredGarages)
+            {
+                garage.PrintGarage();
+            }
+        }
+
+        //shows garages with only one type
         public int? ShowFilteredTypes(int brukerValg)
         {
             foreach (var type in TypeList)
@@ -70,7 +150,7 @@ namespace PostOppgave
                 {                  
                     Console.Clear();                   
                     Console.WriteLine($"Bilverksteder med {type.TypeNavn} godkjenning: \n ");
-                    // next:return list of garages with selected types
+                    // return list of garages with selected type
                     foreach (var garage in GarageList)
                     {
                         //if(garage.Godkjenningstyper.Contains((char)brukerValg))
@@ -84,8 +164,7 @@ namespace PostOppgave
             }
 
             return null;
-        }
-       
+        }      
 
     }
 }
