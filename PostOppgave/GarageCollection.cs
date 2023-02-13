@@ -77,7 +77,7 @@ namespace PostOppgave
             }
         }
 
-        //filter list with selected types and add to list of filtered garages
+        //filter chosen numbers list with selected types 
         public void FilterGarages()
         {
             foreach (var valg in listeMedValg)
@@ -88,6 +88,7 @@ namespace PostOppgave
             LoopThroughAllGarages();
         }
 
+        //turn chosen numbers to licence type name
         public void TurnNumbersToNames(int number)
         {
             foreach (var type in TypeList)
@@ -97,6 +98,7 @@ namespace PostOppgave
                     
         }
 
+        //loop through all garages,check if they include selected licence types and add them to list
         public void LoopThroughAllGarages()
         {
             foreach (var garage in GarageList)
@@ -122,6 +124,7 @@ namespace PostOppgave
             }
         }
 
+        //add garages with selected licences to filtered garages list
         public void AddGarageToFilteredList(Garage garage)
         {
             if (!ListOfFilteredGarages.Contains(garage))
@@ -130,7 +133,7 @@ namespace PostOppgave
             }
         }
 
-        //shows garages with multiple types
+        //shows garages with 3 chosen types
         public void PrintFilteredGarages()
         {
             Console.Clear();
